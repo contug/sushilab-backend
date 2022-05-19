@@ -9,5 +9,7 @@ public class SushilabBackendApplication {
     public static void main(String[] args) {
         SpringApplication.run(SushilabBackendApplication.class, args);
     }
+    
+    //
 
 }
