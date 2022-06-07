@@ -37,10 +37,7 @@ public class Menu {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	
-	@NotBlank
-	private String fasciaOrariaGiorno;
-	
+
 	@NotNull
 	private Time oraInizio;
 	

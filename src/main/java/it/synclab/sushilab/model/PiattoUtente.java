@@ -47,7 +47,7 @@ public class PiattoUtente {
     @Min(value=0)
     @Max(value=5)
     @NotNull 
-    private int valutazioneUtente;
+    private float valutazioneUtente;
     
     @NotNull 
     private boolean preferito; 
