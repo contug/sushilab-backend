@@ -1,4 +1,4 @@
-package it.synclab.sushilabbackend.model;
+package it.synclab.sushilab.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,13 +16,19 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -36,15 +42,17 @@ public class Sezione {
 	@NotEmpty
 	private String nome;
 	
+	@JsonBackReference
 	@NotNull
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "menu_id")
     private Menu menu;
 	
 	@Builder.Default
+	@JsonManagedReference
 	@NotEmpty
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "sezione")
-    private Set<Piatto> piatti = new HashSet<>();
+    private Set<Piatto> piatti=new HashSet<>();
 	
 
 }

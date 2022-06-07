@@ -1,4 +1,4 @@
-package it.synclab.sushilabbackend.model;
+package it.synclab.sushilab.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -12,7 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,5 +45,9 @@ public class Tavolo {
             )
     )
     private Set<Menu> menu = new HashSet<>();
+	
+	@Builder.Default
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "tavolo")
+    private Set<Utente> utenti = new HashSet<>();
 	
 }

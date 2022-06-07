@@ -1,4 +1,4 @@
-package it.synclab.sushilabbackend.model;
+package it.synclab.sushilab.model;
 
 import java.io.Serializable;
 
