@@ -69,5 +69,5 @@ public class Utente {
 			joinColumns = @JoinColumn(name="utente_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name="ingrediente_id", referencedColumnName = "id"))
 	private Set<Ingrediente> blackList=new HashSet<>();
-
+	
 }

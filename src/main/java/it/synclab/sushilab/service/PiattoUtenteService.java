@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import it.synclab.sushilab.model.PiattoUtente;
+import it.synclab.sushilab.model.PiattoUtenteKey;
 import it.synclab.sushilab.repository.MenuRepository;
+import it.synclab.sushilab.repository.PiattoRepository;
 import it.synclab.sushilab.repository.PiattoUtenteRepository;
 import it.synclab.sushilab.repository.UtenteRepository;
 
@@ -24,6 +26,9 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 	
 	@Autowired
 	private UtenteRepository repoUtente;
+	
+	@Autowired
+	private PiattoRepository repoPiatto;
 	
 	@Override
 	public ResponseEntity<?> getPreferiti(long idM) {
@@ -54,9 +59,9 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 	@Override
 	public ResponseEntity<?> valutazionePiatto(long idU, long idP, float voto) {
 		
-		boolean trovatoU = repo.existsByUtente_Id(idU);
+		boolean trovatoU = repoUtente.existsById(idU);
 		
-		boolean trovatoP = repo.existsByPiatto_Id(idP);
+		boolean trovatoP = repoPiatto.existsById(idP);
 		
 		if(!trovatoP)
 			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
@@ -65,7 +70,17 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
 
 		
-		PiattoUtente piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
+		PiattoUtente piatto = new PiattoUtente();
+		
+		boolean associazione = repo.existsByPiatto_IdAndUtenteId(idP, idU);
+				
+		if(associazione)
+			piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
+		else {
+			piatto.setId(new PiattoUtenteKey(idP, idU));
+			piatto.setPiatto(repoPiatto.getById(idP));
+			piatto.setUtente(repoUtente.getById(idU));
+		}
 		
 		piatto.setValutazioneUtente(voto);
 		
@@ -95,9 +110,9 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 	@Override
 	public ResponseEntity<?> aggiungiPreferito(long idU, long idP) {
 		
-		boolean trovatoU = repo.existsByUtente_Id(idU);
+		boolean trovatoU = repoUtente.existsById(idU);
 		
-		boolean trovatoP = repo.existsByPiatto_Id(idP);
+		boolean trovatoP = repoPiatto.existsById(idP);
 		
 		if(!trovatoP)
 			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
@@ -105,10 +120,18 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		if(!trovatoU)
 			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
 
-		PiattoUtente piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
-
-		if(piatto == null)
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+		
+		PiattoUtente piatto = new PiattoUtente();
+		
+		boolean associazione = repo.existsByPiatto_IdAndUtenteId(idP, idU);
+		
+		if(associazione)
+			piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
+		else {
+			piatto.setId(new PiattoUtenteKey(idP, idU));
+			piatto.setPiatto(repoPiatto.getById(idP));
+			piatto.setUtente(repoUtente.getById(idU));
+		}
 		
 		piatto.setPreferito(true);
 		
@@ -120,9 +143,9 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 	@Override
 	public ResponseEntity<?> rimuoviPreferito(long idU, long idP) {
 		
-		boolean trovatoU = repo.existsByUtente_Id(idU);
+		boolean trovatoU = repoUtente.existsById(idU);
 		
-		boolean trovatoP = repo.existsByPiatto_Id(idP);
+		boolean trovatoP = repoPiatto.existsById(idP);
 		
 		if(!trovatoP)
 			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
@@ -131,10 +154,17 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
 
 		
-		PiattoUtente piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
-
-		if(piatto == null)
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+		PiattoUtente piatto = new PiattoUtente();
+		
+		boolean associazione = repo.existsByPiatto_IdAndUtenteId(idP, idU);
+		
+		if(associazione)
+			piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
+		else {
+			piatto.setId(new PiattoUtenteKey(idP, idU));
+			piatto.setPiatto(repoPiatto.getById(idP));
+			piatto.setUtente(repoUtente.getById(idU));
+		}
 		
 		piatto.setPreferito(false);
 		

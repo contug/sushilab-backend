@@ -11,7 +11,7 @@ import it.synclab.sushilab.model.PiattoUtenteKey;
 @Repository
 public interface PiattoUtenteRepository extends JpaRepository<PiattoUtente, PiattoUtenteKey> {
 
-public List<PiattoUtente> findByPreferitoAndPiatto_Sezione_Menu_Id(boolean preferito, long idM);
+	public List<PiattoUtente> findByPreferitoAndPiatto_Sezione_Menu_Id(boolean preferito, long idM);
 	
 	public List<PiattoUtente> findByPreferitoAndUtente_Id(boolean preferito, long idU);
 		
@@ -20,4 +20,6 @@ public List<PiattoUtente> findByPreferitoAndPiatto_Sezione_Menu_Id(boolean prefe
 	public boolean existsByPiatto_Id(long idP);
 	
 	public boolean existsByUtente_Id(long idU);
+	
+	public boolean existsByPiatto_IdAndUtenteId(long idP, long idU);
 }
