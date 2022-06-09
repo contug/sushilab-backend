@@ -25,7 +25,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Data
+//@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -69,5 +69,50 @@ public class Utente {
 			joinColumns = @JoinColumn(name="utente_id", referencedColumnName = "id"),
 			inverseJoinColumns = @JoinColumn(name="ingrediente_id", referencedColumnName = "id"))
 	private Set<Ingrediente> blackList=new HashSet<>();
+	
+	
+	public long getId() {
+		return id;
+	}
+	
+	public String getEmail() {
+		return email;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public Set<Ruolo> getRuoli() {
+		return ruoli;
+	}
+	
+	public Set<PiattoUtente> getPiattiUtenti() {
+		return piattiUtenti;
+	}
+	
+	public Set<Ordine> getOrdini() {
+		return ordini;
+	}
+	
+	public Tavolo getTavolo() {
+		return tavolo;
+	}
+	
+	public void setTavolo(Tavolo tavolo) {
+		this.tavolo = tavolo;
+	}
+	
+	public Set<Ingrediente> getBlackList() {
+		return blackList;
+	}
+	
+	public void setBlackList(Set<Ingrediente> blackList) {
+		this.blackList = blackList;
+	}
 	
 }
