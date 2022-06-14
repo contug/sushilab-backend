@@ -1,14 +1,17 @@
 package it.synclab.sushilab.controller;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +23,8 @@ import it.synclab.sushilab.service.DettagliUtenteService;
 import it.synclab.sushilab.config.JwtTokenUtil;
 import it.synclab.sushilab.model.JwtRequest;
 import it.synclab.sushilab.model.JwtResponse;
+import it.synclab.sushilab.model.Utente;
+import it.synclab.sushilab.repository.UtenteRepository;
 import it.synclab.sushilab.dto.UtenteDto;
 
 @RestController
@@ -35,6 +40,8 @@ public class JwtAuthenticationController {
 	@Autowired
 	private DettagliUtenteService userDetailsService;
 
+	@Autowired
+	UtenteRepository utenteRepository;
 	
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -45,8 +52,10 @@ public class JwtAuthenticationController {
 		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-
-		return ResponseEntity.ok(new JwtResponse(token));
+		Utente utente=utenteRepository.findByEmail(authenticationRequest.getUsername())
+				.orElseThrow(()->
+						new UsernameNotFoundException("User not foud with email: "+authenticationRequest.getUsername()));
+		return new ResponseEntity<>(new JwtResponse(token, utente.getId()), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/utente", method = RequestMethod.POST)
