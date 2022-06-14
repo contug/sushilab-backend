@@ -13,6 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import it.synclab.sushilab.service.DettagliUtenteService;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -58,8 +63,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 				.authenticated()
 				.and()
 				.httpBasic();
+
 	}
 
-	
-	
+
+
 }
