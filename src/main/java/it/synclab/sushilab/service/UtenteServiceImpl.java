@@ -26,14 +26,9 @@ import it.synclab.sushilab.repository.UtenteRepository;
 @Service
 public class UtenteServiceImpl implements UtenteService {
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private UtenteRepository utenteRepository;
-	
-	@Autowired
-	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private TavoloRepository tavoloRepository;
@@ -44,30 +39,29 @@ public class UtenteServiceImpl implements UtenteService {
 	@Autowired
 	private AllergeneRepository allergeneRepository;
 
-	@Override
-	public ResponseEntity<?> registrazioneUtente(UtenteDto utenteDto) {
-		if(utenteRepository.existsByEmail(utenteDto.getEmail())) {
-			return new ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST);
-		}
-		
-		Utente utente=utenteDto.toUtente();
-		
-		utente.setPassword(passwordEncoder.encode(utente.getPassword()));
-		
-		utenteRepository.save(utente);
-		
-		return new ResponseEntity<>("User registered successfully", HttpStatus.OK);
-	}
-
-	@Override
-	public ResponseEntity<String> login(UtenteDto utenteDto) {
-		Authentication authentication=authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
-				utenteDto.getEmail(), utenteDto.getPassword()));
-		
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
-		return new ResponseEntity<String>("User signed-in successfully!", HttpStatus.OK);
-	}
+	/*
+	 * @Override public ResponseEntity<?> registrazioneUtente(UtenteDto utenteDto) {
+	 * if(utenteRepository.existsByEmail(utenteDto.getEmail())) { return new
+	 * ResponseEntity<>("Email is already taken!", HttpStatus.BAD_REQUEST); }
+	 * 
+	 * Utente utente=utenteDto.toUtente();
+	 * 
+	 * utente.setPassword(passwordEncoder.encode(utente.getPassword()));
+	 * 
+	 * utenteRepository.save(utente);
+	 * 
+	 * return new ResponseEntity<>("User registered successfully", HttpStatus.OK); }
+	 * 
+	 * @Override public ResponseEntity<String> login(UtenteDto utenteDto) {
+	 * Authentication authentication=authenticationManager.authenticate(new
+	 * UsernamePasswordAuthenticationToken( utenteDto.getEmail(),
+	 * utenteDto.getPassword()));
+	 * 
+	 * SecurityContextHolder.getContext().setAuthentication(authentication);
+	 * 
+	 * return new ResponseEntity<String>("User signed-in successfully!",
+	 * HttpStatus.OK); }
+	 */
 
 	@Override
 	public ResponseEntity<?> partecipaSessione(Long tavoloId, Long utenteId) {

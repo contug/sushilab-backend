@@ -20,18 +20,7 @@ public class UtenteController {
 
 	@Autowired
 	private UtenteService utenteService;
-	
-	
-	@PostMapping("/utente")
-	public ResponseEntity<?> registrazioneUtente(@RequestBody UtenteDto utenteDto) {
-		 return utenteService.registrazioneUtente(utenteDto);
-	}
-	
-	@PostMapping("/login")
-	public ResponseEntity<String> login(@RequestBody UtenteDto utenteDto) {
-		return utenteService.login(utenteDto);
-	}
-	
+
 	@PostMapping("/tavolo/{idTavolo}/{idUtente}")
 	public ResponseEntity<?> partecipaSessione(@PathVariable("idTavolo") Long tavoloId, @PathVariable("idUtente") Long utenteId){
 		return utenteService.partecipaSessione(tavoloId, utenteId);
