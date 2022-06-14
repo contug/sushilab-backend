@@ -1,13 +1,10 @@
-package it.synclab.sushilabbackend.model;
+package it.synclab.sushilab.model;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,17 +16,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class OrdineDettaglio {
+@Table(name="ruoli")
+public class Ruolo {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "piatto_id", referencedColumnName = "id")
-    private Piatto piatto;
-	
-	@NotNull
-	private int molteplicita;
+	private String nome;
 	
 }

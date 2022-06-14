@@ -1,4 +1,4 @@
-package it.synclab.sushilabbackend.model;
+package it.synclab.sushilab.model;
 
 import java.io.Serializable;
 
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PiattoUtenteKey implements Serializable {
+public class OrdineKey implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
