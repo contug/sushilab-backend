@@ -14,6 +14,8 @@ public interface PiattoUtenteRepository extends JpaRepository<PiattoUtente, Piat
 	public List<PiattoUtente> findByPreferitoAndPiatto_Sezione_Menu_Id(boolean preferito, long idM);
 	
 	public List<PiattoUtente> findByPreferitoAndUtente_Id(boolean preferito, long idU);
+	
+	public List<PiattoUtente> findByPiatto_Id(long idP);
 		
 	public PiattoUtente findByPiatto_IdAndUtente_Id(long idP, long idU);
 	

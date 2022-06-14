@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import it.synclab.sushilab.model.Piatto;
 import it.synclab.sushilab.model.PiattoUtente;
 import it.synclab.sushilab.model.PiattoUtenteKey;
 import it.synclab.sushilab.repository.MenuRepository;
@@ -68,6 +69,9 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 
 		if(!trovatoU)
 			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+		
+		if(voto > 5 || voto < 0)
+			return new ResponseEntity<>("Voto deve essere compreso tra 0 e 5", HttpStatus.METHOD_NOT_ALLOWED);
 
 		
 		PiattoUtente piatto = new PiattoUtente();
@@ -85,6 +89,9 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		piatto.setValutazioneUtente(voto);
 		
 		repo.save(piatto);
+		
+		//aggiorna valutazione media
+		aggiornaValutazioneMedia(idP);
 		
 		return new ResponseEntity<>("valutazione inserita", HttpStatus.OK);
 	}
@@ -171,6 +178,19 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		repo.save(piatto);
 	
 		return new ResponseEntity<>("Piatto rimosso dai preferiti", HttpStatus.OK);
+	}
+	
+	
+	private void aggiornaValutazioneMedia(long idP) {
+		List<PiattoUtente> piatti = repo.findByPiatto_Id(idP);
+		float somma = 0f;
+		for(PiattoUtente piattiUtente : piatti) {
+			somma += piattiUtente.getValutazioneUtente();
+		}
+		float media = somma / piatti.size();
+		Piatto piatto = repoPiatto.getById(idP);
+		piatto.setValutazioneMedia(media);
+		repoPiatto.save(piatto);
 	}
 	
 }

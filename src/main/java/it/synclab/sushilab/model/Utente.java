@@ -19,9 +19,11 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+//import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
@@ -60,6 +62,7 @@ public class Utente {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "tavolo_id")
+	@JsonBackReference
     private Tavolo tavolo;
 	
 	@Builder.Default
