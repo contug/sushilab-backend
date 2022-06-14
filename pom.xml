@@ -60,11 +60,14 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+<<<<<<< HEAD
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
+=======
+>>>>>>> ae0839d2faa068c856eea987e2aa75fff8a7d883
     </dependencies>
 
     <build>
