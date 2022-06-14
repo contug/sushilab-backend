@@ -45,13 +45,6 @@ public class Utente {
 	@NotBlank
 	private String password;
 	
-	@ManyToMany(fetch=FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(
-			name="utenti_ruoli",
-			joinColumns = @JoinColumn(name="utente_id", referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name="ruolo_id", referencedColumnName = "id"))
-	private Set<Ruolo> ruoli;
-	
 	@Builder.Default
     @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, mappedBy = "utente")
     private Set<PiattoUtente> piattiUtenti = new HashSet<>();
@@ -74,7 +67,7 @@ public class Utente {
 	private Set<Ingrediente> blackList=new HashSet<>();
 	
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	
@@ -88,10 +81,6 @@ public class Utente {
 	
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public Set<Ruolo> getRuoli() {
-		return ruoli;
 	}
 	
 	public Set<PiattoUtente> getPiattiUtenti() {

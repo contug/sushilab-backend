@@ -29,11 +29,11 @@ public class SushilabApplication {
 			allergeneRepository.save(new AllergeneInizialeDto("pesce", "#0000ff").toAllergene());
 			allergeneRepository.save(new AllergeneInizialeDto("arachidi", "#d2691e").toAllergene());
 			allergeneRepository.save(new AllergeneInizialeDto("soia", "#32cd32").toAllergene());
-			allergeneRepository.save(new AllergeneInizialeDto("frutta a guscio", "#ff0000").toAllergene());
+			allergeneRepository.save(new AllergeneInizialeDto("frutta secca", "#ff0000").toAllergene());
 			allergeneRepository.save(new AllergeneInizialeDto("sedano", "#7cfc00").toAllergene());
 			allergeneRepository.save(new AllergeneInizialeDto("senape", "#daa520").toAllergene());
-			allergeneRepository.save(new AllergeneInizialeDto("semi di sesamo", "#d2b48c").toAllergene());
-			allergeneRepository.save(new AllergeneInizialeDto("anidride solforosa e solfiti", "	#c71585").toAllergene());
+			allergeneRepository.save(new AllergeneInizialeDto("sesamo", "#d2b48c").toAllergene());
+			allergeneRepository.save(new AllergeneInizialeDto("solfiti", "#c71585").toAllergene());
 			allergeneRepository.save(new AllergeneInizialeDto("molluschi", "#7fffd4").toAllergene());
 			allergeneRepository.save(new AllergeneInizialeDto("lupini", "#ffff00").toAllergene());
     	}

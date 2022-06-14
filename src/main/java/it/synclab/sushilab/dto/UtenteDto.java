@@ -23,8 +23,7 @@ public class UtenteDto {
 		return Utente 
 			  .builder() 
 			  .email(email)
-			  .password(password) 
-			  .ruoli(Collections.singleton(new RuoloDto("ROLE_USER").toRuolo())) 
+			  .password(password)
 			  .build();
 	  
 	}
