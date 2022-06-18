@@ -1,8 +1,5 @@
 package it.synclab.sushilab.controller;
 
-import java.util.Objects;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,14 +44,14 @@ public class JwtAuthenticationController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+		authenticate(authenticationRequest.getEmail(), authenticationRequest.getPassword());
 
-		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getEmail());
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		Utente utente=utenteRepository.findByEmail(authenticationRequest.getUsername())
+		Utente utente=utenteRepository.findByEmail(authenticationRequest.getEmail())
 				.orElseThrow(()->
-						new UsernameNotFoundException("User not foud with email: "+authenticationRequest.getUsername()));
+						new UsernameNotFoundException("User not foud with email: "+authenticationRequest.getEmail()));
 		return new ResponseEntity<>(new JwtResponse(token, utente.getId()), HttpStatus.OK);
 	}
 
