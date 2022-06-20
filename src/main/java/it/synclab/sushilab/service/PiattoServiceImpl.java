@@ -2,9 +2,10 @@ package it.synclab.sushilab.service;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
+import it.synclab.sushilab.model.Immagine;
 import org.apache.commons.io.IOUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.http.HttpStatus;
@@ -77,22 +78,24 @@ public class PiattoServiceImpl implements PiattoService {
 
 
 	@Override
-	public ResponseEntity<?> visualizzaImmagine(Long menuId, Long sezioneId, Long piattoId) throws IOException {
-		if(!(menuRepository.existsById(menuId))) {
+	public ResponseEntity<?> visualizzaImmagine(Long piattoId) throws IOException {
+	/*	if(!(menuRepository.existsById(menuId))) {
 			return new ResponseEntity<>("Menu inesitente", HttpStatus.METHOD_NOT_ALLOWED);
 		}
 		
 		if(!(sezioneRepository.existsById(sezioneId))) {
 			return new ResponseEntity<>("Sezione inesitente", HttpStatus.METHOD_NOT_ALLOWED);
-		}
+		}*/
 		if(!(piattoRepository.existsById(piattoId))) {
 			return new ResponseEntity<>("Piatto inesitente", HttpStatus.METHOD_NOT_ALLOWED);
 		}
 		InputStream in= getClass().getResourceAsStream("/piatto-photos/"+piattoId+"/"+piattoId+".png");
 		/*return new ResponseEntity<>(IOUtils.toByteArray(in), HttpStatus.OK);*/
-		byte[] decodeBase64=IOUtils.toByteArray(in);
-		String base64 =Base64.encodeBase64String(decodeBase64);
-		return new ResponseEntity<>(base64, HttpStatus.OK);
+		byte[] imgToByteArray=IOUtils.toByteArray(in);
+		String base64 = Base64.getEncoder().encodeToString(imgToByteArray);
+		Immagine immagine = new Immagine();
+		immagine.img = "data:image/png; base64, " + base64;
+		return new ResponseEntity<>(immagine, HttpStatus.OK);
 	}
 	
 	public @ResponseBody byte[] getImmagine() throws IOException {

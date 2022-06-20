@@ -17,6 +17,6 @@ public interface PiattoService {
 	ResponseEntity<?> visualizzaPiatto(Long menuId, Long sezioneId, Long piattoId);
 
 
-	ResponseEntity<?> visualizzaImmagine(Long menuId, Long sezioneId, Long piattoId) throws IOException;
+	ResponseEntity<?> visualizzaImmagine(Long piattoId) throws IOException;
 
 }
