@@ -47,5 +47,10 @@ public class PiattoUtenteController {
 	public ResponseEntity<?> rimuoviPreferito(@PathVariable("idUtente") long idU, @RequestBody long idP) {
 		return service.rimuoviPreferito(idU, idP);		
 	}
+
+	/*@GetMapping("/piatto/{idUtente}/{idPiatto}")
+	public ResponseEntity<?> getPiattoUtente() {
+
+	}*/
 	
 }
