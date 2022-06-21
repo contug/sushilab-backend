@@ -2,6 +2,7 @@ package it.synclab.sushilab.repository;
 
 import java.util.List;
 
+import it.synclab.sushilab.model.Utente;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -24,4 +25,6 @@ public interface PiattoUtenteRepository extends JpaRepository<PiattoUtente, Piat
 	public boolean existsByUtente_Id(long idU);
 	
 	public boolean existsByPiatto_IdAndUtenteId(long idP, long idU);
+
+	public List<PiattoUtente> findByUtente_Id(long idU);
 }

@@ -17,5 +17,7 @@ public interface PiattoUtenteServiceInterface {
 	public ResponseEntity<?> aggiungiPreferito(long idU, long idP);
 	
 	public ResponseEntity<?> rimuoviPreferito(long idU, long idP);
+
+	public ResponseEntity<?> getValutazioniUtente(long idU);
 	
 }

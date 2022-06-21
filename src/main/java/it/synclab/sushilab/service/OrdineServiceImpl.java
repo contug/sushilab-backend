@@ -62,7 +62,7 @@ public class OrdineServiceImpl implements OrdineService {
 				ordineRepository.save(ordineDto.toOrdine(utenteRepository.getById(utenteId), piattoRepository));
 			}
 		}
-		return new ResponseEntity<>("Ordini registrati con successo", HttpStatus.OK);
+		return new ResponseEntity<>("\"Ordini registrati con successo\"", HttpStatus.OK);
 	}
 
 	@Override

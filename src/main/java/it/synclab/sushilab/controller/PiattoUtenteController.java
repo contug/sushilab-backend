@@ -28,8 +28,8 @@ public class PiattoUtenteController {
 	}
 	
 	@PostMapping(path = "/valutazione/{idUtente}/{idPiatto}")
-	public ResponseEntity<?> valutazionePiatto(@PathVariable("idUtente") long idU, @PathVariable("idPiatto") long idP, @RequestBody float voto) {
-		return service.valutazionePiatto(idU, idP, voto);
+	public ResponseEntity<?> valutazionePiatto(@PathVariable("idUtente") long idU, @PathVariable("idPiatto") long idP, @RequestBody int valutazione) {
+		return service.valutazionePiatto(idU, idP, (float)valutazione);
 	}
 	
 	
@@ -48,9 +48,9 @@ public class PiattoUtenteController {
 		return service.rimuoviPreferito(idU, idP);		
 	}
 
-	/*@GetMapping("/piatto/{idUtente}/{idPiatto}")
-	public ResponseEntity<?> getPiattoUtente() {
-
-	}*/
+	@GetMapping("/tavolo/valutazioni/{idUtente}")
+	public ResponseEntity<?> getValutazioniUtente(@PathVariable("idUtente") long idU) {
+		return service.getValutazioniUtente(idU);
+	}
 	
 }
