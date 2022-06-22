@@ -53,11 +53,36 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		boolean esisteU = repoUtente.existsById(idU);
 		
 		if(!esisteU)
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Utente inesitente\"", HttpStatus.NO_CONTENT);
 		
 		List<PiattoUtente> preferiti = repo.findByPreferitoAndUtente_Id(true, idU);
 		
 		return ResponseEntity.ok(preferiti);
+	}
+
+	@Override
+	public ResponseEntity<?> getAllPreferiti(long idU) {
+
+		boolean esisteU = repoUtente.existsById(idU);
+
+		if(!esisteU)
+			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+
+		List<PiattoUtente> preferiti = repo.findByPreferitoAndUtente_Id(true, idU);
+
+		List<Piatto> piattiPreferiti=new ArrayList<Piatto>();
+		for (PiattoUtente piattoUtente : preferiti) {
+			piattiPreferiti.add(repoPiatto.getById(piattoUtente.getId().getPiattoId()));
+		}
+
+		return ResponseEntity.ok(piattiPreferiti);
+	}
+
+	public ResponseEntity<?> getPreferito(long idU, long idP) {
+		if(!repoUtente.existsById(idU))
+			return new ResponseEntity<>("Utente inesistente", HttpStatus.NO_CONTENT);
+		PiattoUtente piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
+		return ResponseEntity.ok(piatto);
 	}
 	
 	@Override
@@ -125,10 +150,10 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		boolean trovatoP = repoPiatto.existsById(idP);
 		
 		if(!trovatoP)
-			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Piatto inesitente\"", HttpStatus.NO_CONTENT);
 
 		if(!trovatoU)
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Utente inesitente\"", HttpStatus.NO_CONTENT);
 
 		
 		PiattoUtente piatto = new PiattoUtente();
@@ -147,7 +172,7 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		
 		repo.save(piatto);
 		
-		return new ResponseEntity<>("Piatto aggiunto ai preferiti", HttpStatus.OK);
+		return new ResponseEntity<>("\"Piatto aggiunto ai preferiti\"", HttpStatus.OK);
 	}
 	
 	@Override
@@ -156,7 +181,7 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		boolean trovatoU = repoUtente.existsById(idU);
 		
 		boolean trovatoP = repoPiatto.existsById(idP);
-		
+
 		if(!trovatoP)
 			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
 
@@ -180,7 +205,7 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		
 		repo.save(piatto);
 	
-		return new ResponseEntity<>("Piatto rimosso dai preferiti", HttpStatus.OK);
+		return new ResponseEntity<>("\"Piatto rimosso dai preferiti\"", HttpStatus.OK);
 	}
 	
 	

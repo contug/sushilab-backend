@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 public interface PiattoUtenteServiceInterface {
 
 	public ResponseEntity<?> getPreferiti(long idM);
+
+	public ResponseEntity<?> getPreferito(long idU, long idP);
 	
 	public ResponseEntity<?> getPreferitiUtente(long idU);
 	
@@ -19,5 +21,6 @@ public interface PiattoUtenteServiceInterface {
 	public ResponseEntity<?> rimuoviPreferito(long idU, long idP);
 
 	public ResponseEntity<?> getValutazioniUtente(long idU);
-	
+
+	public ResponseEntity<?> getAllPreferiti(long idU);
 }

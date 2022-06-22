@@ -30,9 +30,9 @@ public class PiattoController {
 		return piattoService.visualizzaImmagine(piattoId);
 	}
 	
-	@GetMapping("/piatto/{menuId}/{sezioneId}/{piattoId}")
-	public ResponseEntity<?> visualizzaPiatto(@PathVariable("menuId") Long menuId, @PathVariable("sezioneId") Long sezioneId, @PathVariable("piattoId") Long piattoId){
-		return piattoService.visualizzaPiatto(menuId, sezioneId, piattoId);
+	@GetMapping("/piatto/{piattoId}")
+	public ResponseEntity<?> visualizzaPiatto( @PathVariable("piattoId") Long piattoId){
+		return piattoService.visualizzaPiatto( piattoId);
 	}
 	
 

@@ -1,6 +1,7 @@
 package it.synclab.sushilab.config;
 
 import java.io.IOException;
+import java.util.Map;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -33,6 +34,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		final String requestTokenHeader = request.getHeader("Authorization");
+
 		logger.warn("JwtRequestFilter request log: " + request.getMethod());
 		logger.warn("JwtRequestFilter header log: " + requestTokenHeader);
 

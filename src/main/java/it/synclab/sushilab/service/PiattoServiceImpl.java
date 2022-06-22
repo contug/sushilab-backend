@@ -62,14 +62,7 @@ public class PiattoServiceImpl implements PiattoService {
 
 
 	@Override
-	public ResponseEntity<?> visualizzaPiatto(Long menuId, Long sezioneId, Long piattoId) {
-		if(!(menuRepository.existsById(menuId))) {
-			return new ResponseEntity<>("Menu inesitente", HttpStatus.METHOD_NOT_ALLOWED);
-		}
-		
-		if(!(sezioneRepository.existsById(sezioneId))) {
-			return new ResponseEntity<>("Sezione inesitente", HttpStatus.METHOD_NOT_ALLOWED);
-		}
+	public ResponseEntity<?> visualizzaPiatto( Long piattoId) {
 		if(!(piattoRepository.existsById(piattoId))) {
 			return new ResponseEntity<>("Piatto inesitente", HttpStatus.METHOD_NOT_ALLOWED);
 		}
