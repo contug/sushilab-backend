@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 
 public interface TavoloServiceInterface {
 
-	public ResponseEntity<?> creaSessione(long idT);
+	public ResponseEntity<?> creaSessione(String qrCode);
 	
 	public ResponseEntity<?>  ottieniSessione(long idT);
 	

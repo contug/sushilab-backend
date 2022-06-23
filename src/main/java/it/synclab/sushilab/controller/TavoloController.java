@@ -17,11 +17,8 @@ public class TavoloController {
 	
 	
 	@PostMapping(path = "/tavolo")
-	public ResponseEntity<?> creaSessione(@RequestBody Optional<Long> idT) {
-		long id = 0;
-		if(idT.isPresent())
-			id = idT.get();
-		return service.creaSessione(id);
+	public ResponseEntity<?> creaSessione(@RequestBody String qrCode) {
+		return service.creaSessione(qrCode);
 	}
 	
 	
