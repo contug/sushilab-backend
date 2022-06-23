@@ -17,12 +17,12 @@ public interface UtenteService {
 
 	public ResponseEntity<?> partecipaSessione(Long tavoloId, Long utenteId);
 
-	public ResponseEntity<?> aggiornaBlacklist(Long utenteId, Set<IngredienteDto> ingredienti);
+	public ResponseEntity<?> aggiornaBlacklist(Long utenteId, IngredienteDto ingrediente);
 
 	public ResponseEntity<?> getAllergeni();
 
 	public ResponseEntity<?> getBlacklist(Long idUtente);
 
-	public ResponseEntity<?> eliminaBlacklist(Long idUtente, Set<IngredienteDto> ingredienti);
+	public ResponseEntity<?> eliminaBlacklist(Long idUtente, IngredienteDto ingredienti);
 	
 }
