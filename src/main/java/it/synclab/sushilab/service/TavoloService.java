@@ -27,7 +27,7 @@ public class TavoloService implements TavoloServiceInterface{
 	
 	@Override
 	@SuppressWarnings("deprecation")
-	public ResponseEntity<?> creaSessione(long idT) {
+	public ResponseEntity<?> creaSessione(String qrCode) {
 		                  
         Calendar rightNow = Calendar.getInstance();
         Time oraAttuale = new Time(rightNow.get(Calendar.HOUR_OF_DAY), rightNow.get(Calendar.MINUTE), rightNow.get(Calendar.SECOND));
@@ -36,19 +36,20 @@ public class TavoloService implements TavoloServiceInterface{
                 
         
         if(!foundMenu.isPresent())
-        	return new ResponseEntity<>("Menu inesitente", HttpStatus.METHOD_NOT_ALLOWED);
+        	return new ResponseEntity<>("\"Menu inesitente\"", HttpStatus.METHOD_NOT_ALLOWED);
         
         Tavolo tavolo = new Tavolo();
         
         Set<Menu> menu = new HashSet<>();
         menu.add(foundMenu.get());
         
-        tavolo.setId(idT);
+        //tavolo.setId(idT);
+        tavolo.setQrCode(qrCode);
         tavolo.setMenu(menu);
         
 		repo.save(tavolo);
 		
-		return new ResponseEntity<>("Sessione creata ", HttpStatus.OK);
+		return new ResponseEntity<>("\"Sessione creata\"", HttpStatus.OK);
 
 	}
 	
@@ -58,7 +59,7 @@ public class TavoloService implements TavoloServiceInterface{
 		Optional<Tavolo> foundT = repo.findById(idT);
 		
 		if(!foundT.isPresent())
-			return new ResponseEntity<>("Sessione inesistente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Sessione inesistente\"", HttpStatus.NO_CONTENT);
 			
 		return ResponseEntity.ok(foundT.get());
 	}
@@ -69,7 +70,7 @@ public class TavoloService implements TavoloServiceInterface{
 		Optional<Tavolo> foundT = repo.findById(idT);
 		
 		if(!foundT.isPresent())
-			return new ResponseEntity<>("Sessione inesistente", HttpStatus.METHOD_NOT_ALLOWED);
+			return new ResponseEntity<>("\"Sessione inesistente\"", HttpStatus.METHOD_NOT_ALLOWED);
 		
 		Tavolo tavolo = foundT.get();
 		
@@ -78,7 +79,7 @@ public class TavoloService implements TavoloServiceInterface{
 		repo.save(tavolo);
 		repo.deleteById(idT);
 		
-		return new ResponseEntity<>("Sessione chiusa", HttpStatus.OK);
+		return new ResponseEntity<>("\"Sessione chiusa\"", HttpStatus.OK);
 
 	}
 }

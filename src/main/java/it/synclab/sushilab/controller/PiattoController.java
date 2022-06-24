@@ -25,14 +25,14 @@ public class PiattoController {
 		return piattoService.aggiungiPiatto(menuId, sezioneId, piattoDto);
 	}
 	
-	@GetMapping(value= "/piatto/immagine/{menuId}/{sezioneId}/{piattoId}")
-	public ResponseEntity<?> visualizzaImmagine(@PathVariable("menuId") Long menuId, @PathVariable("sezioneId") Long sezioneId, @PathVariable("piattoId") Long piattoId) throws IOException{
-		return piattoService.visualizzaImmagine(menuId, sezioneId, piattoId);
+	@GetMapping(value= "/img/{piattoId}")
+	public ResponseEntity<?> visualizzaImmagine(@PathVariable("piattoId") Long piattoId) throws IOException{
+		return piattoService.visualizzaImmagine(piattoId);
 	}
 	
-	@GetMapping("/piatto/{menuId}/{sezioneId}/{piattoId}")
-	public ResponseEntity<?> visualizzaPiatto(@PathVariable("menuId") Long menuId, @PathVariable("sezioneId") Long sezioneId, @PathVariable("piattoId") Long piattoId){
-		return piattoService.visualizzaPiatto(menuId, sezioneId, piattoId);
+	@GetMapping("/piatto/{piattoId}")
+	public ResponseEntity<?> visualizzaPiatto( @PathVariable("piattoId") Long piattoId){
+		return piattoService.visualizzaPiatto( piattoId);
 	}
 	
 

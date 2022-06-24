@@ -1,7 +1,10 @@
 package it.synclab.sushilab.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import it.synclab.sushilab.model.ValutazioneUtente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -50,11 +53,36 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		boolean esisteU = repoUtente.existsById(idU);
 		
 		if(!esisteU)
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Utente inesitente\"", HttpStatus.NO_CONTENT);
 		
 		List<PiattoUtente> preferiti = repo.findByPreferitoAndUtente_Id(true, idU);
 		
 		return ResponseEntity.ok(preferiti);
+	}
+
+	@Override
+	public ResponseEntity<?> getAllPreferiti(long idU) {
+
+		boolean esisteU = repoUtente.existsById(idU);
+
+		if(!esisteU)
+			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+
+		List<PiattoUtente> preferiti = repo.findByPreferitoAndUtente_Id(true, idU);
+
+		List<Piatto> piattiPreferiti=new ArrayList<Piatto>();
+		for (PiattoUtente piattoUtente : preferiti) {
+			piattiPreferiti.add(repoPiatto.getById(piattoUtente.getId().getPiattoId()));
+		}
+
+		return ResponseEntity.ok(piattiPreferiti);
+	}
+
+	public ResponseEntity<?> getPreferito(long idU, long idP) {
+		if(!repoUtente.existsById(idU))
+			return new ResponseEntity<>("Utente inesistente", HttpStatus.NO_CONTENT);
+		PiattoUtente piatto = repo.findByPiatto_IdAndUtente_Id(idP, idU);
+		return ResponseEntity.ok(piatto);
 	}
 	
 	@Override
@@ -93,7 +121,7 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		//aggiorna valutazione media
 		aggiornaValutazioneMedia(idP);
 		
-		return new ResponseEntity<>("valutazione inserita", HttpStatus.OK);
+		return new ResponseEntity<>("\"valutazione inserita\"", HttpStatus.OK);
 	}
 	
 	@Override
@@ -104,10 +132,10 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		boolean trovatoP = repo.existsByPiatto_Id(idP);
 		
 		if(!trovatoP)
-			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Piatto inesitente\"", HttpStatus.NO_CONTENT);
 
 		if(!trovatoU)
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Utente inesitente\"", HttpStatus.NO_CONTENT);
 
 		float valutazione = repo.findByPiatto_IdAndUtente_Id(idP, idU).getValutazioneUtente();
 		
@@ -122,10 +150,10 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		boolean trovatoP = repoPiatto.existsById(idP);
 		
 		if(!trovatoP)
-			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Piatto inesitente\"", HttpStatus.NO_CONTENT);
 
 		if(!trovatoU)
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("\"Utente inesitente\"", HttpStatus.NO_CONTENT);
 
 		
 		PiattoUtente piatto = new PiattoUtente();
@@ -144,7 +172,7 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		
 		repo.save(piatto);
 		
-		return new ResponseEntity<>("Piatto aggiunto ai preferiti", HttpStatus.OK);
+		return new ResponseEntity<>("\"Piatto aggiunto ai preferiti\"", HttpStatus.OK);
 	}
 	
 	@Override
@@ -153,7 +181,7 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		boolean trovatoU = repoUtente.existsById(idU);
 		
 		boolean trovatoP = repoPiatto.existsById(idP);
-		
+
 		if(!trovatoP)
 			return new ResponseEntity<>("Piatto inesitente", HttpStatus.NO_CONTENT);
 
@@ -177,7 +205,7 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		
 		repo.save(piatto);
 	
-		return new ResponseEntity<>("Piatto rimosso dai preferiti", HttpStatus.OK);
+		return new ResponseEntity<>("\"Piatto rimosso dai preferiti\"", HttpStatus.OK);
 	}
 	
 	
@@ -191,6 +219,19 @@ public class PiattoUtenteService implements PiattoUtenteServiceInterface{
 		Piatto piatto = repoPiatto.getById(idP);
 		piatto.setValutazioneMedia(media);
 		repoPiatto.save(piatto);
+	}
+
+	public ResponseEntity<?> getValutazioniUtente(long idUtente) {
+		List<PiattoUtente> listPiattoUtente = repo.findByUtente_Id(idUtente);
+		List<ValutazioneUtente> list = new ArrayList<>();
+
+		listPiattoUtente.forEach(element -> {
+			ValutazioneUtente valutazioneUtente = new ValutazioneUtente();
+			valutazioneUtente.idPiatto = element.getPiatto().getId();
+			valutazioneUtente.valutazione = element.getValutazioneUtente();
+			list.add(valutazioneUtente);
+		});
+		return ResponseEntity.ok(list);
 	}
 	
 }

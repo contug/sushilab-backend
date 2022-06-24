@@ -28,4 +28,6 @@ public class MenuController {
 	public ResponseEntity<?> getFasce(@PathVariable("idMenu")long idM) {
 		return service.getFasce(idM);
 	}
+
+
 }

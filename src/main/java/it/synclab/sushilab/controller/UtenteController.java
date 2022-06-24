@@ -28,12 +28,12 @@ public class UtenteController {
 	}
 	
 	@PostMapping("/blacklist/{idUtente}")
-	public ResponseEntity<?> aggiornaBlacklist(@PathVariable Long idUtente, @RequestBody Set<IngredienteDto> ingredienti){
-		return utenteService.aggiornaBlacklist(idUtente, ingredienti);
+	public ResponseEntity<?> aggiornaBlacklist(@PathVariable Long idUtente, @RequestBody IngredienteDto ingrediente){
+		return utenteService.aggiornaBlacklist(idUtente, ingrediente);
 	}
 	
 	@DeleteMapping("/blacklist/{idUtente}")
-	public ResponseEntity<?> eliminaBlacklist(@PathVariable Long idUtente, @RequestBody Set<IngredienteDto> ingredienti){
+	public ResponseEntity<?> eliminaBlacklist(@PathVariable Long idUtente, @RequestBody IngredienteDto ingredienti){
 		return utenteService.eliminaBlacklist(idUtente, ingredienti);
 	}
 	

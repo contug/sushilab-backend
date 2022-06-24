@@ -77,7 +77,7 @@ public class UtenteServiceImpl implements UtenteService {
 		return new ResponseEntity<>("Utente collegato alla sessione", HttpStatus.OK);
 	}
 
-	@Override
+	/*@Override
 	public ResponseEntity<?> aggiornaBlacklist(Long utenteId, Set<IngredienteDto> ingredientiDto) {
 		if(!(utenteRepository.existsById(utenteId))) {
 			return new ResponseEntity<>("Utente inesitente", HttpStatus.METHOD_NOT_ALLOWED);
@@ -90,6 +90,25 @@ public class UtenteServiceImpl implements UtenteService {
 		Utente utente=utenteRepository.getById(utenteId);
 		utente.setBlackList(ingredienti);
 		utenteRepository.save(utente);
+		return new ResponseEntity<>("Blacklist aggiornata", HttpStatus.OK);
+	}*/
+
+	@Override
+	public ResponseEntity<?> aggiornaBlacklist(Long utenteId, IngredienteDto ingredienteDto) {
+		if(!(utenteRepository.existsById(utenteId))) {
+			return new ResponseEntity<>("Utente inesitente", HttpStatus.METHOD_NOT_ALLOWED);
+		}
+
+		Ingrediente ingrediente=ingredienteDto.toIngrediente(ingredienteRepository);
+
+
+		Utente utente=utenteRepository.getById(utenteId);
+
+		Set<Ingrediente> blacklist = utente.getBlackList();
+		blacklist.add(ingrediente);
+		utente.setBlackList(blacklist);
+		utenteRepository.save(utente);
+
 		return new ResponseEntity<>("Blacklist aggiornata", HttpStatus.OK);
 	}
 
@@ -106,7 +125,7 @@ public class UtenteServiceImpl implements UtenteService {
 		return new ResponseEntity<>(utenteRepository.getById(idUtente).getBlackList(), HttpStatus.OK);
 	}
 
-	@Override
+	/*@Override
 	public ResponseEntity<?> eliminaBlacklist(Long idUtente, Set<IngredienteDto> ingredientiDto) {
 		if(!(utenteRepository.existsById(idUtente))){
 			return new ResponseEntity<>("Utente inesitente", HttpStatus.METHOD_NOT_ALLOWED);
@@ -121,8 +140,24 @@ public class UtenteServiceImpl implements UtenteService {
 		utente.getBlackList().removeAll(ingredienti);
 		utenteRepository.save(utente);
 		return new ResponseEntity<>("Blacklist aggiornata", HttpStatus.OK);
-		
-		
+	}*/
+
+	@Override
+	public ResponseEntity<?> eliminaBlacklist(Long idUtente, IngredienteDto ingredientiDto) {
+		if(!(utenteRepository.existsById(idUtente))){
+			return new ResponseEntity<>("Utente inesitente", HttpStatus.METHOD_NOT_ALLOWED);
+		}
+		//Set<Ingrediente> ingredienti=new HashSet<>();
+		//for (IngredienteDto ingredienteDto : ingredientiDto) {
+			Ingrediente ingrediente=ingredientiDto.toIngrediente(ingredienteRepository);
+			//ingredienti.add(ingrediente);
+		//}
+		System.out.println("ingrediente passato"+ingrediente);
+
+		Utente utente=utenteRepository.getById(idUtente);
+		utente.getBlackList().remove(ingrediente);
+		utenteRepository.save(utente);
+		return new ResponseEntity<>("\"Blacklist aggiornata\"", HttpStatus.OK);
 	}
 
 }

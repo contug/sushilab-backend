@@ -16,5 +16,8 @@ public interface OrdineService {
 
 	public ResponseEntity<?> getOrdiniPersonali(Long idUtente);
 
+	public ResponseEntity<?> eliminaOrdineInArrivo(long idUtente, long idPiatto);
 
+
+	public ResponseEntity<?> aggiornaOrdineInArrivo(long idUtente, long idPiatto);
 }

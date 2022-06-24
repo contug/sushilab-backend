@@ -55,6 +55,49 @@ public class PiattoUtente {
   
     @UpdateTimestamp 
     private Date ultimoOrdine;
-	  
-	
+
+
+    public void setId(PiattoUtenteKey id) {
+        this.id = id;
+    }
+
+    public Piatto getPiatto() {
+        return piatto;
+    }
+
+    public void setPiatto(Piatto piaptto) {
+        this.piatto = piaptto;
+    }
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+    public float getValutazioneUtente() {
+        return valutazioneUtente;
+    }
+
+    public void setValutazioneUtente(float valutazioneUtente) {
+        this.valutazioneUtente = valutazioneUtente;
+    }
+
+    public boolean isPreferito() {
+        return preferito;
+    }
+
+    public void setPreferito(boolean preferito) {
+        this.preferito = preferito;
+    }
+
+    public Date getUltimoOrdine() {
+        return ultimoOrdine;
+    }
+
+    public void setUltimoOrdine(Date ultimoOrdine) {
+        this.ultimoOrdine = ultimoOrdine;
+    }
 }
