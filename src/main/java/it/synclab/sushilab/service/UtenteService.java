@@ -17,7 +17,7 @@ public interface UtenteService {
 
 	public ResponseEntity<?> partecipaSessione(Long tavoloId, Long utenteId);
 
-	public ResponseEntity<?> aggiornaBlacklist(Long utenteId, IngredienteDto ingrediente);
+	public ResponseEntity<?> aggiornaBlacklist(Long utenteId, Set<IngredienteDto> ingrediente);
 
 	public ResponseEntity<?> getAllergeni();
 
