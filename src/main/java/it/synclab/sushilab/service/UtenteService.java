@@ -21,6 +21,8 @@ public interface UtenteService {
 
 	public ResponseEntity<?> getAllergeni();
 
+	public ResponseEntity<?> getIngredienti();
+
 	public ResponseEntity<?> getBlacklist(Long idUtente);
 
 	public ResponseEntity<?> eliminaBlacklist(Long idUtente, IngredienteDto ingredienti);

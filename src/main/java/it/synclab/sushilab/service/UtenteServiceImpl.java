@@ -119,6 +119,11 @@ public class UtenteServiceImpl implements UtenteService {
 	}
 
 	@Override
+	public ResponseEntity<?> getIngredienti() {
+		return new ResponseEntity<>(ingredienteRepository.findAll(), HttpStatus.OK);
+	}
+
+	@Override
 	public ResponseEntity<?> getBlacklist(Long idUtente) {
 		if(!(utenteRepository.existsById(idUtente))){
 			return new ResponseEntity<>("Utente inesitente", HttpStatus.METHOD_NOT_ALLOWED);

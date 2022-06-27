@@ -41,4 +41,9 @@ public class UtenteController {
 	public ResponseEntity<?> getAllergeni(){
 		return utenteService.getAllergeni();
 	}
+
+	@GetMapping("/ingredienti")
+	public ResponseEntity<?> getIngredienti(){
+		return utenteService.getIngredienti();
+	}
 }
