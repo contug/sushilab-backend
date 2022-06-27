@@ -94,7 +94,15 @@ public class OrdineServiceImpl implements OrdineService {
 		for (Utente utente : utenti) {
 			ordini.addAll(ordineRepository.getByIdUtenteId(utente.getId()));
 		}
-		return new ResponseEntity<>(ordini, HttpStatus.OK);
+		List<OrdineDettaglio> ordiniDettaglio = new ArrayList<>();
+		ordini.forEach(ordine -> {
+			OrdineDettaglio ordineDettaglio = new OrdineDettaglio();
+			ordineDettaglio.molteplicita = ordine.getCount();
+			ordineDettaglio.piatto = ordine.getPiatto();
+			ordineDettaglio.note = ordine.getNote();
+			ordiniDettaglio.add(ordineDettaglio);
+		});
+		return new ResponseEntity<>(ordiniDettaglio, HttpStatus.OK);
 	}
 
 	@Override

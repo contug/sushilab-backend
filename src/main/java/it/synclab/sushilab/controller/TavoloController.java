@@ -16,20 +16,20 @@ public class TavoloController {
 	private TavoloServiceInterface service;
 	
 	
-	@PostMapping(path = "/tavolo")
-	public ResponseEntity<?> creaSessione(@RequestBody String qrCode) {
-		return service.creaSessione(qrCode);
+	@PostMapping(path = "/tavolo/qr/{idTavolo}/{idUtente}")
+	public ResponseEntity<?> creaSessione(@PathVariable("idTavolo") Long idTavolo, @PathVariable("idUtente") long idUtente, @RequestBody String qrCode) {
+		return service.creaSessione(qrCode, idTavolo, idUtente);
 	}
 	
 	
-	@GetMapping(path = "/tavolo/{idTavolo}")
-	public ResponseEntity<?>  ottieniSessione(@PathVariable("idTavolo") long idT) {
-		return service.ottieniSessione(idT);
+	@GetMapping(path = "/tavolo/qr/{idTavolo}/{idUtente}")
+	public ResponseEntity<?>  ottieniSessione(@PathVariable("idTavolo") long idT, @PathVariable("idUtente") long idUtente) {
+		return service.ottieniSessione(idT, idUtente);
 	}
 	
 	
-	@DeleteMapping(path = "tavolo/{idTavolo}")
-	public ResponseEntity<?> chiudiSessione(@PathVariable("idTavolo") long idT) {
+	@DeleteMapping(path = "tavolo/qr/{idTavolo}")
+	public ResponseEntity<?> chiudiSessione(@PathVariable long idT) {
 		return service.chiudiSessione(idT);
 	}
 }

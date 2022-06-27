@@ -27,7 +27,7 @@ public class TavoloService implements TavoloServiceInterface{
 	
 	@Override
 	@SuppressWarnings("deprecation")
-	public ResponseEntity<?> creaSessione(String qrCode) {
+	public ResponseEntity<?> creaSessione(String qrCode, Long idTavolo, long idUtente) {
 		                  
         Calendar rightNow = Calendar.getInstance();
         Time oraAttuale = new Time(rightNow.get(Calendar.HOUR_OF_DAY), rightNow.get(Calendar.MINUTE), rightNow.get(Calendar.SECOND));
@@ -43,23 +43,29 @@ public class TavoloService implements TavoloServiceInterface{
         Set<Menu> menu = new HashSet<>();
         menu.add(foundMenu.get());
         
-        //tavolo.setId(idT);
+        tavolo.setId(idTavolo);
         tavolo.setQrCode(qrCode);
         tavolo.setMenu(menu);
-        
 		repo.save(tavolo);
+
+		UtenteServiceImpl utenteService = new UtenteServiceImpl();
+		utenteService.partecipaSessione(tavolo.getId(), idUtente);
 		
 		return new ResponseEntity<>("\"Sessione creata\"", HttpStatus.OK);
 
 	}
 	
 	@Override
-	public ResponseEntity<?>  ottieniSessione(long idT) {
+	public ResponseEntity<?>  ottieniSessione(long idT, long idUtente) {
 		
 		Optional<Tavolo> foundT = repo.findById(idT);
 		
 		if(!foundT.isPresent())
 			return new ResponseEntity<>("\"Sessione inesistente\"", HttpStatus.NO_CONTENT);
+		else {
+			UtenteService utenteService = new UtenteServiceImpl();
+			utenteService.partecipaSessione(idT, idUtente);
+		}
 			
 		return ResponseEntity.ok(foundT.get());
 	}
@@ -74,11 +80,10 @@ public class TavoloService implements TavoloServiceInterface{
 		
 		Tavolo tavolo = foundT.get();
 		
-		tavolo.setMenu(null);
+		tavolo.setQrCode(null);
 		
 		repo.save(tavolo);
-		repo.deleteById(idT);
-		
+
 		return new ResponseEntity<>("\"Sessione chiusa\"", HttpStatus.OK);
 
 	}
