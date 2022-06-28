@@ -25,6 +25,9 @@ public class TavoloService implements TavoloServiceInterface{
 	@Autowired
 	private MenuRepository repoMenu;
 	
+	@Autowired
+	private UtenteServiceImpl utenteService;
+	
 	@Override
 	@SuppressWarnings("deprecation")
 	public ResponseEntity<?> creaSessione(String qrCode, Long idTavolo, long idUtente) {
@@ -35,7 +38,7 @@ public class TavoloService implements TavoloServiceInterface{
         Optional<Menu> foundMenu = Optional.of(repoMenu.findByOraInizioLessThanAndOraFineGreaterThan(oraAttuale, oraAttuale));        
                 
         
-        if(!foundMenu.isPresent())
+        if(foundMenu == null)
         	return new ResponseEntity<>("\"Menu inesitente\"", HttpStatus.METHOD_NOT_ALLOWED);
         
         Tavolo tavolo = new Tavolo();
@@ -46,9 +49,9 @@ public class TavoloService implements TavoloServiceInterface{
         tavolo.setId(idTavolo);
         tavolo.setQrCode(qrCode);
         tavolo.setMenu(menu);
-		repo.save(tavolo);
+		tavolo = repo.save(tavolo);
 
-		UtenteServiceImpl utenteService = new UtenteServiceImpl();
+		//UtenteServiceImpl utenteService = new UtenteServiceImpl();
 		utenteService.partecipaSessione(tavolo.getId(), idUtente);
 		
 		return new ResponseEntity<>("\"Sessione creata\"", HttpStatus.OK);
