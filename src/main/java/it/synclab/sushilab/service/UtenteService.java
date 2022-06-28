@@ -16,6 +16,8 @@ public interface UtenteService {
 	//public ResponseEntity<String> login(UtenteDto utenteDto);
 
 	public ResponseEntity<?> partecipaSessione(Long tavoloId, Long utenteId);
+	
+	public ResponseEntity<?> esciSessione(Long utenteId);
 
 	public ResponseEntity<?> aggiornaBlacklist(Long utenteId, Set<IngredienteDto> ingrediente);
 

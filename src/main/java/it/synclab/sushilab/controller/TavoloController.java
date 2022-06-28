@@ -1,7 +1,5 @@
 package it.synclab.sushilab.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,15 +19,18 @@ public class TavoloController {
 		return service.creaSessione(qrCode, idTavolo, idUtente);
 	}
 	
-	
-	@GetMapping(path = "/tavolo/qr/{idTavolo}/{idUtente}")
-	public ResponseEntity<?>  ottieniSessione(@PathVariable("idTavolo") long idT, @PathVariable("idUtente") long idUtente) {
+	@GetMapping(path = "/tavolo/{idTavolo}/{idUtente}")
+	public ResponseEntity<?> ottieniSessione(@PathVariable("idTavolo") long idT, @PathVariable("idUtente") long idUtente) {
 		return service.ottieniSessione(idT, idUtente);
 	}
 	
+	@GetMapping(path = "/tavolo/qr/{qrCode}/{idUtente}")
+	public ResponseEntity<?> checkSessione(@PathVariable("qrCode") String qrCode, @PathVariable("idUtente") long idUtente) {
+		return service.checkSessione(qrCode, idUtente);
+	}
 	
 	@DeleteMapping(path = "tavolo/qr/{idTavolo}")
-	public ResponseEntity<?> chiudiSessione(@PathVariable long idT) {
+	public ResponseEntity<?> chiudiSessione(@PathVariable("idTavolo") long idT) {
 		return service.chiudiSessione(idT);
 	}
 }

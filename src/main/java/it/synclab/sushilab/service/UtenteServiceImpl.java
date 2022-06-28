@@ -66,15 +66,28 @@ public class UtenteServiceImpl implements UtenteService {
 	@Override
 	public ResponseEntity<?> partecipaSessione(Long tavoloId, Long utenteId) {
 		if(!(tavoloRepository.existsById(tavoloId))) {
-			return new ResponseEntity<>("Tavolo inesitente", HttpStatus.METHOD_NOT_ALLOWED);
+			return new ResponseEntity<>("\"Tavolo inesitente\"", HttpStatus.METHOD_NOT_ALLOWED);
 		}
 		if(!(utenteRepository.existsById(utenteId))) {
-			return new ResponseEntity<>("Utente inesitente", HttpStatus.METHOD_NOT_ALLOWED);
+			return new ResponseEntity<>("\"Utente inesitente\"", HttpStatus.METHOD_NOT_ALLOWED);
 		}
 		Utente utente=utenteRepository.getById(utenteId);
 		utente.setTavolo(tavoloRepository.getById(tavoloId));
 		utenteRepository.save(utente);
-		return new ResponseEntity<>("Utente collegato alla sessione", HttpStatus.OK);
+		return new ResponseEntity<>("\"Utente collegato alla sessione\"", HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<?> esciSessione(Long utenteId) {
+		
+		if(!(utenteRepository.existsById(utenteId)))
+			return new ResponseEntity<>("\"Utente inesitente\"", HttpStatus.METHOD_NOT_ALLOWED);
+
+		Utente utente = utenteRepository.getById(utenteId);
+		utente.setTavolo(null);
+		utenteRepository.save(utente);
+		
+		return new ResponseEntity<>("\"Utente disconnesso dalla sessione\"", HttpStatus.OK);
 	}
 
 	@Override
